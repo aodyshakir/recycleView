@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class WordAdapter extends RecyclerView.Adapter<WordAdapter.WordViewHolder> {
 
-     public ArrayList<WordClass> mArrayList ;
+     private ArrayList<WordClass> mArrayList ;
 
 
     public WordAdapter(ArrayList<WordClass> list) {
@@ -21,12 +21,57 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.WordViewHolder
 
     }
 
+    private OnItemClickListener mlistener ;
+
+    public interface OnItemClickListener{
+        void onItemClick(int position);
+    }
+
+    public void SetOnClickListener (OnItemClickListener listener)
+    {
+        mlistener = listener;
+    }
+
+
+
+    // inner class
+    public static class WordViewHolder extends RecyclerView.ViewHolder{
+        public ImageView mImageView;
+        public TextView mTextView;
+        public TextView mTextView2;
+
+
+        public WordViewHolder(@NonNull final View itemView , final OnItemClickListener listener) {
+            super(itemView);
+            mImageView = itemView.findViewById(R.id.imageView);
+            mTextView = itemView.findViewById(R.id.text1);
+            mTextView2 = itemView.findViewById(R.id.text2);
+
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                   if (listener != null)
+                   {
+                       int position = getAdapterPosition();
+                       if (position != RecyclerView.NO_POSITION)
+                       {
+                           listener.onItemClick(position);
+                       }
+                   }
+                }
+            });
+
+
+        }
+    }
+
 
     @NonNull
     @Override
     public WordViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item,parent,false);
-        WordViewHolder wordViewHolder = new WordViewHolder(v);
+        WordViewHolder wordViewHolder = new WordViewHolder(v ,mlistener);
 
         return wordViewHolder;
     }
@@ -49,18 +94,6 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.WordViewHolder
         return mArrayList.size();
     }
 
-    public static class WordViewHolder extends RecyclerView.ViewHolder{
-        public ImageView mImageView;
-        public TextView mTextView;
-        public TextView mTextView2;
 
-
-        public WordViewHolder(@NonNull View itemView) {
-            super(itemView);
-            mImageView = itemView.findViewById(R.id.imageView);
-            mTextView = itemView.findViewById(R.id.text1);
-            mTextView2 = itemView.findViewById(R.id.text2);
-        }
-    }
 
 }
