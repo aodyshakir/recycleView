@@ -33,8 +33,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(int position) {
                   String list1Text = list.get(position).getmTextV1();
+                  int image = list.get(position).getmImageView();
+
                 Intent intent = new Intent(MainActivity.this,DetailsActivity.class);
+
                 intent.putExtra("name",list1Text);
+                intent.putExtra("image1",image);
+
                 startActivity(intent);
             }
         });

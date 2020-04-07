@@ -4,7 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import static java.lang.Integer.parseInt;
 
 public class DetailsActivity extends AppCompatActivity {
 
@@ -15,6 +19,15 @@ public class DetailsActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String Result =intent.getStringExtra("name");
-        Toast.makeText(DetailsActivity.this,Result,Toast.LENGTH_LONG).show();
+        TextView textView = findViewById(R.id.tv);
+        textView.setText(Result);
+       // Toast.makeText(DetailsActivity.this,Result,Toast.LENGTH_LONG).show();
+        int RImage =intent.getIntExtra("image1",0);
+        ImageView imageView =findViewById(R.id.Image);
+        imageView.setImageResource(RImage);
+
+
+
+
     }
 }
